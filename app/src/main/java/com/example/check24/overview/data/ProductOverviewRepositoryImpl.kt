@@ -31,7 +31,7 @@ class ProductOverviewRepositoryImpl @Inject constructor(
                 val productByFilter = when (filterCategory) {
                     FilterCategory.ALL -> dao.getAllProduct()
                     FilterCategory.AVAILABLE -> dao.getAllAvailableProduct()
-                    FilterCategory.FAVOURITE -> dao.getAllProduct()
+                    FilterCategory.FAVOURITE -> dao.getAllFavouriteProduct()
                 }
                 productByFilter.add(ProductEntity(true))
                 emit(BaseResult.Success(productByFilter))
