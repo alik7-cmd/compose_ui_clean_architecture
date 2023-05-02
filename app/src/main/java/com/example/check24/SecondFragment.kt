@@ -48,6 +48,7 @@ class SecondFragment : Fragment(), OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         binding.footer.tvFooter.setOnClickListener(this)
         binding.btnFav.setOnClickListener(this)
+
         mViewModel.data?.let { updateUiWith(it) }
     }
 
@@ -57,14 +58,22 @@ class SecondFragment : Fragment(), OnClickListener {
             tvName.text = data.name
             tvDescription.text = data.description
             tvDate.text = data.releaseDate
-            ratingBar.rating = data.rating.toFloat()
+            ratingBar.rating = data.rating
             tvLongDescription.text = data.longDescription
+            updateButtonText(data.isLiked)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun updateButtonText(isLiked : Boolean){
+        when(isLiked){
+            true -> binding.btnFav.text = resources.getString(R.string.text_unselect_fav)
+            false -> binding.btnFav.text = resources.getString(R.string.text_select_fav)
+        }
     }
 
     private fun updateFavStatus() {
