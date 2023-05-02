@@ -1,4 +1,4 @@
-package com.example.check24
+package com.example.check24.overview.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.check24.R
 import com.example.check24.common.ui.AppConstant.WEB_URL
 import com.example.check24.databinding.FragmentFirstBinding
+import com.example.check24.navigate
+import com.example.check24.openWebPageWith
 import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.entity.ProductEntity
-import com.example.check24.overview.presentation.OnProductClickListener
-import com.example.check24.overview.presentation.ProductOverviewAdapter
-import com.example.check24.overview.presentation.ProductOverviewUiState
-import com.example.check24.overview.presentation.ProductOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

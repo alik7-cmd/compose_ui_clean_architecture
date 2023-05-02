@@ -1,4 +1,4 @@
-package com.example.check24.overview.dao
+package com.example.check24.overview.data.dao
 
 import androidx.room.*
 import com.example.check24.overview.domain.entity.ProductEntity

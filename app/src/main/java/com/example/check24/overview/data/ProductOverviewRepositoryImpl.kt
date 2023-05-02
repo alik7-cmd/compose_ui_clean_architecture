@@ -2,7 +2,7 @@ package com.example.check24.overview.data
 
 import com.example.check24.common.BaseResult
 import com.example.check24.common.ui.AppConstant
-import com.example.check24.overview.dao.ProductOverviewDao
+import com.example.check24.overview.data.dao.ProductOverviewDao
 import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.ProductOverviewRepository
 import com.example.check24.overview.domain.entity.ProductEntity

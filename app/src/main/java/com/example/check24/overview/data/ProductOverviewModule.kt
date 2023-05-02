@@ -1,7 +1,7 @@
 package com.example.check24.overview.data
 
 import com.example.check24.common.module.NetworkModule
-import com.example.check24.overview.dao.ProductOverviewDao
+import com.example.check24.overview.data.dao.ProductOverviewDao
 import com.example.check24.overview.data.api.ProductOverviewApi
 import com.example.check24.overview.domain.ProductOverviewRepository
 import dagger.Module

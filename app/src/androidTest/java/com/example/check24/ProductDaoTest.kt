@@ -5,7 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.check24.common.CheckLocalDatabase
-import com.example.check24.overview.dao.ProductOverviewDao
+import com.example.check24.overview.data.dao.ProductOverviewDao
 import com.example.check24.overview.domain.entity.ProductEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
