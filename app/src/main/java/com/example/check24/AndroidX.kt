@@ -18,7 +18,7 @@ fun ImageView.loadImageFromWeb(imageUrl : String){
 }
 
 fun Fragment.openWebPageWith(url : String){
-    val uri: Uri = Uri.parse("https://m.check24.de/rechtliche-hinweise/?deviceoutput=app")
+    val uri: Uri = Uri.parse(url)
     val intent = Intent(Intent.ACTION_VIEW, uri)
     startActivity(intent)
 }

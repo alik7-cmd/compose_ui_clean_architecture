@@ -1,4 +1,4 @@
-package com.example.check24
+package com.example.check24.details.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +8,11 @@ import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.check24.R
 import com.example.check24.common.ui.AppConstant.WEB_URL
 import com.example.check24.databinding.FragmentSecondBinding
-import com.example.check24.details.presentation.ProductDetailsViewModel
+import com.example.check24.loadImageFromWeb
+import com.example.check24.openWebPageWith
 import com.example.check24.overview.domain.entity.ProductEntity
 import dagger.hilt.android.AndroidEntryPoint
 
