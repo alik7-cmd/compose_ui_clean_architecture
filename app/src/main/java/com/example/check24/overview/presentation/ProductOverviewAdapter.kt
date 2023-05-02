@@ -104,7 +104,7 @@ class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
             ratingBar.rating = data.rating
             tvPrice.text = "${data.price} ${data.currency}"
             root.setOnClickListener {
-                listener.onClick(data, true)
+                listener.onClick(data, false)
             }
         }
     }
