@@ -1,5 +1,6 @@
 package com.example.check24.details.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -54,6 +55,7 @@ class ProductDetailsFragment : Fragment(), OnClickListener {
         mViewModel.data?.let { updateUiWith(it) }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUiWith(data: ProductEntity) {
         with(binding) {
             ivImage.loadImageFromWeb(data.imageURL)
@@ -62,7 +64,8 @@ class ProductDetailsFragment : Fragment(), OnClickListener {
             tvDate.text = data.releaseDate
             ratingBar.rating = data.rating
             tvLongDescription.text = data.longDescription
-            tvPrice.text = "${data.price} ${data.currency}"
+
+            tvPrice.text = "${resources.getString(R.string.text_price)} ${data.price} ${data.currency}"
             updateButtonText(data.isLiked)
         }
     }

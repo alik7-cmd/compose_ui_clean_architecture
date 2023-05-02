@@ -1,5 +1,6 @@
 package com.example.check24.overview.presentation
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -90,6 +91,7 @@ class ProductOverviewAdapter(val listener : OnProductClickListener) :
 class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
+    @SuppressLint("SetTextI18n")
     fun bind(data: ProductEntity, listener : OnProductClickListener) {
         with(binding) {
             if(data.isLiked){
@@ -102,7 +104,7 @@ class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
             tvDescription.text = data.description
             tvDate.text = data.releaseDate
             ratingBar.rating = data.rating
-            tvPrice.text = "${data.price} ${data.currency}"
+            tvPrice.text = "${tvPrice.context.resources.getString(R.string.text_price)} ${data.price} ${data.currency}"
             root.setOnClickListener {
                 listener.onClick(data, false)
             }
@@ -113,6 +115,7 @@ class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
 
 class ProductUnavailableVH(val binding: ItemUnavailableProductBinding) :
     RecyclerView.ViewHolder(binding.root) {
+    @SuppressLint("SetTextI18n")
     fun bind(data: ProductEntity, listener : OnProductClickListener) {
         with(binding) {
             if(data.isLiked){
@@ -125,7 +128,7 @@ class ProductUnavailableVH(val binding: ItemUnavailableProductBinding) :
             tvDescription.text = data.description
             tvDate.text = data.releaseDate
             ratingBar.rating = data.rating
-            tvPrice.text = "${data.price} ${data.currency}"
+            tvPrice.text = "${tvPrice.context.resources.getString(R.string.text_price)} ${data.price} ${data.currency}"
             root.setOnClickListener {
                 listener.onClick(data, false)
             }

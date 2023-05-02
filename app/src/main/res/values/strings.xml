@@ -23,4 +23,6 @@
     <string name="text_long_desc">Long Description</string>
     <string name="text_footer_text">© 2016 Check24</string>
 
+    <string name="text_price">Price</string>
+
 </resources>
