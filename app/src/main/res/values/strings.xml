@@ -16,6 +16,7 @@
     <string name="text_available">Available</string>
     <string name="text_favorites">Favorites</string>
     <string name="text_error">Something went wrong</string>
+    <string name="text_no_data_found">No data found</string>
 
     <string name="text_select_fav">Select as favourite</string>
     <string name="text_unselect_fav">Remove as favourite</string>

@@ -86,6 +86,10 @@ class FirstFragment : Fragment(), OnClickListener {
                 mAdapter = ProductOverviewAdapter(listener).apply {
                     submitList(state.list)
                 }
+                if(state.list.isEmpty()){
+                    binding.refreshContainer.visibility = View.VISIBLE
+                    binding.tvError.text = resources.getString(R.string.text_no_data_found)
+                }
                 binding.rvProductOverview.adapter = mAdapter
             }
 
@@ -140,6 +144,7 @@ class FirstFragment : Fragment(), OnClickListener {
             }
 
             R.id.refresh_container ->{
+                binding.refreshContainer.visibility = View.GONE
                 mViewModel.getProduceOverview(mViewModel.savedFilter)
             }
         }

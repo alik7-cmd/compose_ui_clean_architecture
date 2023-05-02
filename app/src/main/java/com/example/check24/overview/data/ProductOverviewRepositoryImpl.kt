@@ -38,7 +38,7 @@ class ProductOverviewRepositoryImpl @Inject constructor(
                 }
                 ERROR_THRESHOLD--
                 emit(BaseResult.Success(productByFilter))
-                if (productByFilter.isEmpty()) {
+                if (filterCategory == FilterCategory.ALL && productByFilter.isEmpty()) {
                     val remoteProduct = remoteDataSource.getProductOverview(filterCategory)
                     if (remoteProduct is BaseResult.Success) {
                         saveInLocal(remoteProduct.data)
