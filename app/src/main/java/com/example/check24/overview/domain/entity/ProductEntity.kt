@@ -25,23 +25,9 @@ data class ProductEntity(
     val rating: Double,
     val releaseDate: String,
     val type: String,
-    val isLiked : Boolean
+    var isLiked : Boolean
 ) : Parcelable{
 
     constructor(isFooter : Boolean) : this(0, isFooter, false, "", "", "", "", "", "", "",
         "0.0", 1.1, "", "", false)
-
-    /*constructor( isFooter : Boolean,
-                 available: Boolean,
-                 color: String,
-                 colorCode: String,
-                 description: String,
-                 imageURL: String,
-                 longDescription: String,
-                 name: String,
-                 currency: String,
-                 price : String,
-                 rating: Double,
-                 releaseDate: String,
-                 type: String) : this(0, isFooter, available, color, colorCode, description, imageURL, longDescription, name, currency, price, rating, releaseDate, type)*/
 }

@@ -71,18 +71,21 @@ class SecondFragment : Fragment(), OnClickListener {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             when (mViewModel.data!!.isLiked) {
                 true -> {
-                    mViewModel.delete(mViewModel.data!!)
+                    val data = mViewModel.data!!.apply {
+                        isLiked = false
+                    }
+                    mViewModel.delete(data)
                     binding.btnFav.text = resources.getString(R.string.text_select_fav)
                 }
                 false -> {
-                    mViewModel.insert(mViewModel.data!!)
+                    val data = mViewModel.data!!.apply {
+                        isLiked = true
+                    }
+                    mViewModel.insert(data)
                     binding.btnFav.text = resources.getString(R.string.text_unselect_fav)
                 }
             }
-
-
         }
-
     }
 
     override fun onClick(v: View?) {
