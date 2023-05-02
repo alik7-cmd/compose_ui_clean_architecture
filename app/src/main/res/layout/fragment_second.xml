@@ -6,12 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".details.presentation.SecondFragment">
+    tools:context=".details.presentation.ProductDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".details.presentation.SecondFragment"
+        tools:context=".details.presentation.ProductDetailsFragment"
         android:layout_marginTop="10dp">
 
         <ImageView

@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 @AndroidEntryPoint
-class SecondFragment : Fragment(), OnClickListener {
+class ProductDetailsFragment : Fragment(), OnClickListener {
 
     private var _binding: FragmentSecondBinding? = null
 
@@ -33,7 +33,7 @@ class SecondFragment : Fragment(), OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModel.data = SecondFragmentArgs.fromBundle(requireArguments()).data
+        mViewModel.data = ProductDetailsFragmentArgs.fromBundle(requireArguments()).data
     }
 
     override fun onCreateView(

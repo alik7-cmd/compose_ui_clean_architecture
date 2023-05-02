@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.onEach
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 @AndroidEntryPoint
-class FirstFragment : Fragment(), OnClickListener {
+class ProductOverviewFragment : Fragment(), OnClickListener {
 
     private var _binding: FragmentFirstBinding? = null
 
@@ -43,7 +43,7 @@ class FirstFragment : Fragment(), OnClickListener {
             if (isFooterClicked) {
                 openWebPageWith(WEB_URL)
             } else {
-                navigate(FirstFragmentDirections.actionFirstFragmentToSecondFragment(data!!))
+                navigate(ProductOverviewFragmentDirections.actionFirstFragmentToSecondFragment(data!!))
             }
         }
     }
