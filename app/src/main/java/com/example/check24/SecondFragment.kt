@@ -60,6 +60,7 @@ class SecondFragment : Fragment(), OnClickListener {
             tvDate.text = data.releaseDate
             ratingBar.rating = data.rating
             tvLongDescription.text = data.longDescription
+            tvPrice.text = "${data.price} ${data.currency}"
             updateButtonText(data.isLiked)
         }
     }

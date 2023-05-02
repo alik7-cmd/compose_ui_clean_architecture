@@ -18,7 +18,7 @@ class ProductOverviewRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val dao: ProductOverviewDao
 ) : ProductOverviewRepository {
-    private var ERROR_THRESHOLD = 4
+    private var ERROR_THRESHOLD = 10
 
     override suspend fun getProductOverview(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>> {
         return flow {
@@ -33,13 +33,13 @@ class ProductOverviewRepositoryImpl @Inject constructor(
                     FilterCategory.AVAILABLE -> dao.getAllAvailableProduct()
                     FilterCategory.FAVOURITE -> dao.getAllFavouriteProduct()
                 }
-                productByFilter.add(ProductEntity(true))
+                //productByFilter.add(ProductEntity(true))
+                ERROR_THRESHOLD--
                 emit(BaseResult.Success(productByFilter))
                 if (productByFilter.isEmpty() || checkIfOnlyFooter(productByFilter)) {
                     val remoteProduct = remoteDataSource.getProductOverview(filterCategory)
                     if (remoteProduct is BaseResult.Success) {
                         saveInLocal(remoteProduct.data)
-                        ERROR_THRESHOLD--
                         remoteProduct.data.add(ProductEntity(true))
                         emit(remoteProduct)
                     }

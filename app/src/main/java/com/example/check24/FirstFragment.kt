@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -91,8 +90,8 @@ class FirstFragment : Fragment(), OnClickListener {
             }
 
             is ProductOverviewUiState.Error -> {
-                binding.refreshContainer.visibility = View.VISIBLE
                 updateUiLoading(true)
+                binding.refreshContainer.visibility = View.VISIBLE
                 binding.progress.visibility = View.GONE
             }
             is ProductOverviewUiState.Init -> Unit
@@ -135,7 +134,7 @@ class FirstFragment : Fragment(), OnClickListener {
                 mViewModel.savedFilter = FilterCategory.AVAILABLE
             }
 
-            R.id.btn_fav ->{
+            R.id.btn_favourite ->{
                 mViewModel.getProduceOverview(FilterCategory.FAVOURITE)
                 mViewModel.savedFilter = FilterCategory.FAVOURITE
             }
