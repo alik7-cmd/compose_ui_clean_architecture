@@ -30,7 +30,18 @@ class RemoteDataSourceImpl @Inject constructor(val api: ProductOverviewApi) : Re
     }
 }
 
-fun Product.toProductEntity(isFooter : Boolean) = ProductEntity(0,
-    isFooter, available, color, colorCode,
-    description, imageURL, longDescription, name, price.currency, price.value.toString(), rating.toFloat(), DateUtil.getDateFromMiliSecond(releaseDate.toLong()), type, false
+fun Product.toProductEntity(isFooter: Boolean) = ProductEntity(
+    0,
+    isFooter,
+    available,
+    description,
+    imageURL,
+    longDescription,
+    name,
+    price.currency,
+    price.value.toString(),
+    rating.toFloat(),
+    DateUtil.getDateFromMiliSecond(releaseDate.toLong()),
+    type,
+    false
 )

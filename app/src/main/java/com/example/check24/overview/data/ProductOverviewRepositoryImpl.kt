@@ -1,15 +1,11 @@
 package com.example.check24.overview.data
 
 import com.example.check24.common.BaseResult
-import com.example.check24.common.utils.DateUtil
+import com.example.check24.common.ui.AppConstant
 import com.example.check24.overview.dao.ProductOverviewDao
-import com.example.check24.overview.data.api.ProductOverviewApi
-import com.example.check24.overview.data.dto.Product
 import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.ProductOverviewRepository
 import com.example.check24.overview.domain.entity.ProductEntity
-import com.example.check24.overview.domain.entity.ProductOverviewEntity
-import com.example.check24.pMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -18,14 +14,14 @@ class ProductOverviewRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val dao: ProductOverviewDao
 ) : ProductOverviewRepository {
-    private var ERROR_THRESHOLD = 10
+    private var ERROR_THRESHOLD = AppConstant.ERROR_THRESHOLD
 
     override suspend fun getProductOverview(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>> {
         return flow {
 
             if (ERROR_THRESHOLD == 0) {
                 emit(BaseResult.Error(""))
-                ERROR_THRESHOLD = 3
+                ERROR_THRESHOLD = AppConstant.ERROR_THRESHOLD
 
             } else {
                 val productByFilter = when (filterCategory) {
@@ -33,7 +29,7 @@ class ProductOverviewRepositoryImpl @Inject constructor(
                     FilterCategory.AVAILABLE -> dao.getAllAvailableProduct()
                     FilterCategory.FAVOURITE -> dao.getAllFavouriteProduct()
                 }
-                if(productByFilter.isNotEmpty()){
+                if (productByFilter.isNotEmpty()) {
                     productByFilter.add(ProductEntity(true))
                 }
                 ERROR_THRESHOLD--

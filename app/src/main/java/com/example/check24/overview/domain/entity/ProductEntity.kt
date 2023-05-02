@@ -14,8 +14,6 @@ data class ProductEntity(
     val id: Int,
     val isFooter : Boolean,
     val available: Boolean,
-    val color: String,
-    val colorCode: String,
     val description: String,
     val imageURL: String,
     val longDescription: String,
@@ -28,6 +26,6 @@ data class ProductEntity(
     var isLiked : Boolean
 ) : Parcelable{
 
-    constructor(isFooter : Boolean) : this(0, isFooter, false, "", "", "", "", "", "", "",
+    constructor(isFooter : Boolean) : this(0, isFooter, false,  "", "", "", "", "",
         "0.0", 1.1f, "", "", false)
 }
