@@ -14,7 +14,7 @@ import com.example.check24.databinding.ItemUnavailableProductBinding
 import com.example.check24.loadImageFromWeb
 import com.example.check24.overview.domain.entity.ProductEntity
 
-class ProductOverviewAdapter(val listener : OnProductClickListener) :
+class ProductOverviewAdapter(val listener: OnProductClickListener) :
     ListAdapter<ProductEntity, RecyclerView.ViewHolder>(ProductOverviewDiffCallback()) {
 
 
@@ -66,8 +66,7 @@ class ProductOverviewAdapter(val listener : OnProductClickListener) :
 
         } else if (holder is ProductUnavailableVH) {
             holder.bind(getItem(position), listener)
-        }
-        else if( holder is ProductFooterVH){
+        } else if (holder is ProductFooterVH) {
             holder.bind(listener)
         }
 
@@ -92,11 +91,11 @@ class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     @SuppressLint("SetTextI18n")
-    fun bind(data: ProductEntity, listener : OnProductClickListener) {
+    fun bind(data: ProductEntity, listener: OnProductClickListener) {
         with(binding) {
-            if(data.isLiked){
+            if (data.isLiked) {
                 root.setBackgroundColor(ContextCompat.getColor(root.context, R.color.fav_color))
-            }else{
+            } else {
                 root.setBackgroundColor(ContextCompat.getColor(root.context, R.color.white))
             }
             ivImage.loadImageFromWeb(data.imageURL)
@@ -104,7 +103,8 @@ class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
             tvDescription.text = data.description
             tvDate.text = data.releaseDate
             ratingBar.rating = data.rating
-            tvPrice.text = "${tvPrice.context.resources.getString(R.string.text_price)} ${data.price} ${data.currency}"
+            tvPrice.text =
+                "${tvPrice.context.resources.getString(R.string.text_price)} ${data.price} ${data.currency}"
             root.setOnClickListener {
                 listener.onClick(data, false)
             }
@@ -116,11 +116,11 @@ class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
 class ProductUnavailableVH(val binding: ItemUnavailableProductBinding) :
     RecyclerView.ViewHolder(binding.root) {
     @SuppressLint("SetTextI18n")
-    fun bind(data: ProductEntity, listener : OnProductClickListener) {
+    fun bind(data: ProductEntity, listener: OnProductClickListener) {
         with(binding) {
-            if(data.isLiked){
+            if (data.isLiked) {
                 root.setBackgroundColor(ContextCompat.getColor(root.context, R.color.fav_color))
-            }else{
+            } else {
                 root.setBackgroundColor(ContextCompat.getColor(root.context, R.color.white))
             }
             ivImage.loadImageFromWeb(data.imageURL)
@@ -128,7 +128,8 @@ class ProductUnavailableVH(val binding: ItemUnavailableProductBinding) :
             tvDescription.text = data.description
             tvDate.text = data.releaseDate
             ratingBar.rating = data.rating
-            tvPrice.text = "${tvPrice.context.resources.getString(R.string.text_price)} ${data.price} ${data.currency}"
+            tvPrice.text =
+                "${tvPrice.context.resources.getString(R.string.text_price)} ${data.price} ${data.currency}"
             root.setOnClickListener {
                 listener.onClick(data, false)
             }
@@ -137,9 +138,9 @@ class ProductUnavailableVH(val binding: ItemUnavailableProductBinding) :
 
 }
 
-class ProductFooterVH(val binding : ItemFooterBinding) : RecyclerView.ViewHolder(binding.root){
-    fun bind(listener : OnProductClickListener){
-        with(binding){
+class ProductFooterVH(val binding: ItemFooterBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(listener: OnProductClickListener) {
+        with(binding) {
             root.setOnClickListener {
                 listener.onClick(null, true)
             }
@@ -150,13 +151,12 @@ class ProductFooterVH(val binding : ItemFooterBinding) : RecyclerView.ViewHolder
 
 
 class ProductOverviewDiffCallback : DiffUtil.ItemCallback<ProductEntity>() {
-    override fun areItemsTheSame(oldItem: ProductEntity, newItem: ProductEntity): Boolean =
-        oldItem == newItem
+    override fun areItemsTheSame(oldItem: ProductEntity, newItem: ProductEntity): Boolean = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: ProductEntity, newItem: ProductEntity) =
-        oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: ProductEntity, newItem: ProductEntity) = oldItem == newItem
+
 }
 
 interface OnProductClickListener {
-    fun onClick(data: ProductEntity?, isFooterClicked : Boolean)
+    fun onClick(data: ProductEntity?, isFooterClicked: Boolean)
 }

@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductOverviewViewModel @Inject constructor(
     val useCase: GetProductOverviewUseCase,
-    val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     private val _mutableUiState: MutableStateFlow<ProductOverviewUiState> =

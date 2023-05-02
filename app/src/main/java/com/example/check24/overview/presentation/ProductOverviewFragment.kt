@@ -65,6 +65,7 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
         binding.btnAvailable.setOnClickListener(this)
         binding.btnFavourite.setOnClickListener(this)
         binding.refreshContainer.setOnClickListener(this)
+        mAdapter = ProductOverviewAdapter(listener)
         observe()
     }
 
@@ -82,7 +83,7 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
             is ProductOverviewUiState.Success -> {
                 updateUiLoading(false)
                 binding.rvProductOverview.layoutManager = LinearLayoutManager(requireActivity())
-                mAdapter = ProductOverviewAdapter(listener).apply {
+                mAdapter.apply {
                     submitList(state.list)
                 }
                 if(state.list.isEmpty()){
