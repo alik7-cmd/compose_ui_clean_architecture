@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.check24.R
-import com.example.check24.common.utils.DateUtil
 import com.example.check24.databinding.ItemAvailableProductBinding
 import com.example.check24.databinding.ItemFooterBinding
 import com.example.check24.databinding.ItemUnavailableProductBinding
@@ -102,7 +101,8 @@ class ProductAvailableVH(val binding: ItemAvailableProductBinding) :
             tvName.text = data.name
             tvDescription.text = data.description
             tvDate.text = data.releaseDate
-            ratingBar.rating = data.rating.toFloat()
+            ratingBar.rating = data.rating
+            tvPrice.text = "${data.price} ${data.currency}"
             root.setOnClickListener {
                 listener.onClick(data, true)
             }
@@ -124,7 +124,8 @@ class ProductUnavailableVH(val binding: ItemUnavailableProductBinding) :
             tvName.text = data.name
             tvDescription.text = data.description
             tvDate.text = data.releaseDate
-            ratingBar.rating = data.rating.toFloat()
+            ratingBar.rating = data.rating
+            tvPrice.text = "${data.price} ${data.currency}"
             root.setOnClickListener {
                 listener.onClick(data, false)
             }

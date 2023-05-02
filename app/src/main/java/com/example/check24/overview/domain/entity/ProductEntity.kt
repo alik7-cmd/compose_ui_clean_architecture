@@ -22,12 +22,12 @@ data class ProductEntity(
     val name: String,
     val currency: String,
     val price : String,
-    val rating: Double,
+    val rating: Float,
     val releaseDate: String,
     val type: String,
     var isLiked : Boolean
 ) : Parcelable{
 
     constructor(isFooter : Boolean) : this(0, isFooter, false, "", "", "", "", "", "", "",
-        "0.0", 1.1, "", "", false)
+        "0.0", 1.1f, "", "", false)
 }
