@@ -136,8 +136,8 @@ class FirstFragment : Fragment(), OnClickListener {
             }
 
             R.id.btn_fav ->{
-                mViewModel.getProduceOverview(FilterCategory.AVAILABLE)
-                mViewModel.savedFilter = FilterCategory.AVAILABLE
+                mViewModel.getProduceOverview(FilterCategory.FAVOURITE)
+                mViewModel.savedFilter = FilterCategory.FAVOURITE
             }
 
             R.id.refresh_container ->{
