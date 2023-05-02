@@ -33,10 +33,12 @@ class ProductOverviewRepositoryImpl @Inject constructor(
                     FilterCategory.AVAILABLE -> dao.getAllAvailableProduct()
                     FilterCategory.FAVOURITE -> dao.getAllFavouriteProduct()
                 }
-                //productByFilter.add(ProductEntity(true))
+                if(productByFilter.isNotEmpty()){
+                    productByFilter.add(ProductEntity(true))
+                }
                 ERROR_THRESHOLD--
                 emit(BaseResult.Success(productByFilter))
-                if (productByFilter.isEmpty() || checkIfOnlyFooter(productByFilter)) {
+                if (productByFilter.isEmpty()) {
                     val remoteProduct = remoteDataSource.getProductOverview(filterCategory)
                     if (remoteProduct is BaseResult.Success) {
                         saveInLocal(remoteProduct.data)
@@ -48,10 +50,6 @@ class ProductOverviewRepositoryImpl @Inject constructor(
 
 
         }
-    }
-
-    private fun checkIfOnlyFooter(list: List<ProductEntity>) : Boolean{
-        return(list.size == 1 && list[0].isFooter)
     }
 
     private suspend fun saveInLocal(repos: List<ProductEntity>) {
