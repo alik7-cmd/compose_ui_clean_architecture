@@ -16,7 +16,7 @@ class ProductOverviewRepositoryImpl @Inject constructor(
 ) : ProductOverviewRepository {
     private var ERROR_THRESHOLD = AppConstant.ERROR_THRESHOLD
 
-    override suspend fun getProductOverview(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>> {
+    override fun getProductOverview(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>> {
         return flow {
 
             if (ERROR_THRESHOLD == 0) {

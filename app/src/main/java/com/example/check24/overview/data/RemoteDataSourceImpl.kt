@@ -6,7 +6,6 @@ import com.example.check24.overview.data.api.ProductOverviewApi
 import com.example.check24.overview.data.dto.Product
 import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.entity.ProductEntity
-import com.example.check24.overview.domain.entity.ProductOverviewEntity
 import com.example.check24.pMap
 import javax.inject.Inject
 

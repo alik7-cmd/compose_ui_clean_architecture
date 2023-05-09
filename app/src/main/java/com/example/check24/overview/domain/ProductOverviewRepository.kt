@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProductOverviewRepository {
 
-    suspend fun getProductOverview(filterCategory: FilterCategory) : Flow<BaseResult<List<ProductEntity>, String>>
+    fun getProductOverview(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>>
 }

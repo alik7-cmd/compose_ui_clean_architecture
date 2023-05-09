@@ -2,6 +2,7 @@ package com.example.check24.overview.data.dao
 
 import androidx.room.*
 import com.example.check24.overview.domain.entity.ProductEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductOverviewDao {
@@ -23,6 +24,9 @@ interface ProductOverviewDao {
 
     @Query("SELECT * FROM ProductEntity WHERE isLiked = 1")
     fun getAllFavouriteProduct(): MutableList<ProductEntity>
+
+    @Query("SELECT * FROM ProductEntity")
+    fun getAllProductFlow(): Flow<List<ProductEntity>>
 
     @Query("DELETE FROM ProductEntity")
     suspend fun nukeTable()
