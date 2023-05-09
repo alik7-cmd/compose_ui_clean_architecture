@@ -25,9 +25,9 @@ class ProductOverviewViewModel @Inject constructor(
     var savedFilter = FilterCategory.ALL
 
 
-    fun getProduceOverview(filterCategory: FilterCategory) {
+    fun getProduceOverview(filterCategory: FilterCategory, isRefreshing : Boolean = false) {
         viewModelScope.launch(dispatcherProvider.io) {
-            useCase(filterCategory).onStart {
+            useCase(filterCategory, isRefreshing).onStart {
                 setLoadingStatus(true)
 
             }.catch {

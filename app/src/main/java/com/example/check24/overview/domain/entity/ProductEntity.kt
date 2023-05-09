@@ -27,5 +27,5 @@ data class ProductEntity(
 ) : Parcelable{
 
     constructor(isFooter : Boolean) : this(0, isFooter, false,  "", "", "", "", "",
-        "0.0", 1.1f, "", "", false)
+        "0.0", 0.0f, "", "", false)
 }

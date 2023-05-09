@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.check24.R
 import com.example.check24.common.ui.AppConstant.WEB_URL
 import com.example.check24.databinding.FragmentFirstBinding
@@ -26,7 +27,7 @@ import kotlinx.coroutines.flow.onEach
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 @AndroidEntryPoint
-class ProductOverviewFragment : Fragment(), OnClickListener {
+class ProductOverviewFragment : Fragment(), OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private var _binding: FragmentFirstBinding? = null
 
@@ -65,6 +66,7 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
         binding.btnAvailable.setOnClickListener(this)
         binding.btnFavourite.setOnClickListener(this)
         binding.refreshContainer.setOnClickListener(this)
+        binding.swipeRefresh.setOnRefreshListener(this)
         mAdapter = ProductOverviewAdapter(listener)
         observeUiState()
     }
@@ -84,17 +86,16 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
                 updateUiLoading(false)
                 binding.rvProductOverview.layoutManager = LinearLayoutManager(requireActivity())
                 mAdapter.submitList(state.list)
-                if (state.list.isEmpty()) {
+                /*if (state.list.isEmpty()) {
                     binding.refreshContainer.visibility = View.VISIBLE
                     binding.tvError.text = resources.getString(R.string.text_no_data_found)
-                }
+                }*/
                 binding.rvProductOverview.adapter = mAdapter
             }
 
             is ProductOverviewUiState.Error -> {
                 updateUiLoading(true)
                 binding.refreshContainer.visibility = View.VISIBLE
-                binding.progress.visibility = View.GONE
             }
             is ProductOverviewUiState.Init -> Unit
             is ProductOverviewUiState.Loading -> updateUiLoading(state.isLoading)
@@ -107,14 +108,14 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
             true -> {
                 binding.rvProductOverview.visibility = View.GONE
                 binding.layoutFilterContainer.visibility = View.GONE
-                binding.progress.visibility = View.VISIBLE
                 binding.refreshContainer.visibility = View.GONE
+                binding.swipeRefresh.isRefreshing = true
             }
             false -> {
                 binding.rvProductOverview.visibility = View.VISIBLE
                 binding.layoutFilterContainer.visibility = View.VISIBLE
-                binding.progress.visibility = View.GONE
                 binding.refreshContainer.visibility = View.GONE
+                binding.swipeRefresh.isRefreshing = false
             }
         }
     }
@@ -146,5 +147,9 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
                 mViewModel.getProduceOverview(mViewModel.savedFilter)
             }
         }
+    }
+
+    override fun onRefresh() {
+        mViewModel.getProduceOverview(FilterCategory.ALL, true)
     }
 }

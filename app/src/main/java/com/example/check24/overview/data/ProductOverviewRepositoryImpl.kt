@@ -16,8 +16,12 @@ class ProductOverviewRepositoryImpl @Inject constructor(
 ) : ProductOverviewRepository {
     private var ERROR_THRESHOLD = AppConstant.ERROR_THRESHOLD
 
-    override fun getProductOverview(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>> {
+    override fun getProductOverview(filterCategory: FilterCategory, isRefreshing : Boolean): Flow<BaseResult<List<ProductEntity>, String>> {
         return flow {
+
+            if(isRefreshing){
+                deleteAllData()
+            }
 
             if (ERROR_THRESHOLD == 0) {
                 emit(BaseResult.Error(""))
@@ -51,6 +55,10 @@ class ProductOverviewRepositoryImpl @Inject constructor(
     private suspend fun saveInLocal(repos: List<ProductEntity>) {
         dao.nukeTable()
         dao.insertAll(repos)
+    }
+
+    private suspend fun deleteAllData(){
+        dao.nukeTable()
     }
 }
 

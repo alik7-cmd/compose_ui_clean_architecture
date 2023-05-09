@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProductOverviewRepository {
 
-    fun getProductOverview(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>>
+    fun getProductOverview(filterCategory: FilterCategory, isRefreshing : Boolean): Flow<BaseResult<List<ProductEntity>, String>>
 }

@@ -90,14 +90,14 @@ class ProductDetailsFragment : Fragment(), OnClickListener {
                         isLiked = false
                     }
                     mViewModel.delete(data)
-                    binding.btnFav.text = resources.getString(R.string.text_select_fav)
+                    updateButtonText(false)
                 }
                 false -> {
                     val data = mViewModel.data!!.apply {
                         isLiked = true
                     }
                     mViewModel.insert(data)
-                    binding.btnFav.text = resources.getString(R.string.text_unselect_fav)
+                    updateButtonText(true)
                 }
             }
         }

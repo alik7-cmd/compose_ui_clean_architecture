@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetProductOverviewUseCase @Inject constructor(private val repository: ProductOverviewRepository) {
-    operator fun invoke(filterCategory: FilterCategory): Flow<BaseResult<List<ProductEntity>, String>> {
-        return repository.getProductOverview(filterCategory)
+    operator fun invoke(filterCategory: FilterCategory, isRefreshing : Boolean): Flow<BaseResult<List<ProductEntity>, String>> {
+        return repository.getProductOverview(filterCategory,isRefreshing)
     }
 }
