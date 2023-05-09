@@ -66,11 +66,11 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
         binding.btnFavourite.setOnClickListener(this)
         binding.refreshContainer.setOnClickListener(this)
         mAdapter = ProductOverviewAdapter(listener)
-        observe()
+        observeUiState()
     }
 
 
-    private fun observe() {
+    private fun observeUiState() {
         mViewModel.uiState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state -> handleUi(state) }
@@ -83,10 +83,8 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
             is ProductOverviewUiState.Success -> {
                 updateUiLoading(false)
                 binding.rvProductOverview.layoutManager = LinearLayoutManager(requireActivity())
-                mAdapter.apply {
-                    submitList(state.list)
-                }
-                if(state.list.isEmpty()){
+                mAdapter.submitList(state.list)
+                if (state.list.isEmpty()) {
                     binding.refreshContainer.visibility = View.VISIBLE
                     binding.tvError.text = resources.getString(R.string.text_no_data_found)
                 }
@@ -138,12 +136,12 @@ class ProductOverviewFragment : Fragment(), OnClickListener {
                 mViewModel.savedFilter = FilterCategory.AVAILABLE
             }
 
-            R.id.btn_favourite ->{
+            R.id.btn_favourite -> {
                 mViewModel.getProduceOverview(FilterCategory.FAVOURITE)
                 mViewModel.savedFilter = FilterCategory.FAVOURITE
             }
 
-            R.id.refresh_container ->{
+            R.id.refresh_container -> {
                 binding.refreshContainer.visibility = View.GONE
                 mViewModel.getProduceOverview(mViewModel.savedFilter)
             }

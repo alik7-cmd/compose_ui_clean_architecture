@@ -1,4 +1,4 @@
-package com.example.check24.details.domain
+package com.example.check24.details.domain.usecase
 
 import com.example.check24.details.domain.usecase.DeleteFavouriteProductUseCase
 import com.example.check24.details.domain.usecase.InsertFavouriteProductUseCase

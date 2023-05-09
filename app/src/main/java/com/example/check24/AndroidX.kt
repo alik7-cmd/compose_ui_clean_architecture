@@ -13,8 +13,9 @@ fun Fragment.navigate(direction: NavDirections) {
 }
 
 fun ImageView.loadImageFromWeb(imageUrl : String){
-
-    Glide.with(this.context).load(imageUrl).into(this)
+    Glide.with(this.context)
+        .load(imageUrl)
+        .into(this)
 }
 
 fun Fragment.openWebPageWith(url : String){

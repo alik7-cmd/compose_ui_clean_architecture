@@ -4,11 +4,10 @@ import com.example.check24.common.BaseResult
 import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.ProductOverviewRepository
 import com.example.check24.overview.domain.entity.ProductEntity
-import com.example.check24.overview.domain.entity.ProductOverviewEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetProductOverviewUseCase @Inject constructor(val repository: ProductOverviewRepository) {
+class GetProductOverviewUseCase @Inject constructor(private val repository: ProductOverviewRepository) {
     suspend operator fun invoke(filterCategory: FilterCategory) : Flow<BaseResult<List<ProductEntity>, String>> {
         return repository.getProductOverview(filterCategory)
     }

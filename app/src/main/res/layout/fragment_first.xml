@@ -78,21 +78,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_all" />
+            android:text="@string/text_all"
+            android:layout_margin="@dimen/dp5"/>
 
         <Button
             android:id="@+id/btn_available"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_available"/>
+            android:text="@string/text_available"
+            android:layout_margin="@dimen/dp5"/>
 
         <Button
             android:id="@+id/btn_favourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_favorites"/>
+            android:text="@string/text_favorites"
+            android:layout_margin="@dimen/dp5"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

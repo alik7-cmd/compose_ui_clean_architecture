@@ -1,9 +1,7 @@
 package com.example.check24.details.presentation
 
 import androidx.lifecycle.ViewModel
-import com.example.check24.details.domain.ProductDetailsUseCase
-import com.example.check24.details.domain.usecase.DeleteFavouriteProductUseCase
-import com.example.check24.details.domain.usecase.InsertFavouriteProductUseCase
+import com.example.check24.details.domain.usecase.ProductDetailsUseCase
 import com.example.check24.overview.domain.entity.ProductEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
