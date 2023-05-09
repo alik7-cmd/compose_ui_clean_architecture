@@ -1,7 +1,6 @@
 package com.example.check24.common.module
 
 import com.example.check24.BuildConfig
-import com.example.check24.common.preference.SharedPreference
 import com.example.check24.common.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
@@ -49,7 +48,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRequestInterceptor(sharedPreference: SharedPreference): RequestInterceptor {
-        return RequestInterceptor(sharedPreference)
+    fun provideRequestInterceptor(): RequestInterceptor {
+        return RequestInterceptor()
     }
 }
