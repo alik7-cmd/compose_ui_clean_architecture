@@ -1,6 +1,6 @@
 package com.example.check24.details.data
 
-import com.example.check24.details.domain.ProductDetailsUseCase
+import com.example.check24.details.domain.usecase.ProductDetailsUseCase
 import com.example.check24.details.domain.usecase.DeleteFavouriteProductUseCase
 import com.example.check24.details.domain.usecase.InsertFavouriteProductUseCase
 import dagger.Module
