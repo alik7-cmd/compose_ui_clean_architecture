@@ -8,7 +8,6 @@ import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.entity.ProductEntity
 import com.example.check24.overview.domain.usecase.GetProductOverviewUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,13 +24,9 @@ class ProductOverviewViewModel @Inject constructor(
 
     var savedFilter = FilterCategory.ALL
 
-    val handler = CoroutineExceptionHandler { coroutineContext, throwable ->
-         // do your task
-    }
-
 
     fun getProduceOverview(filterCategory: FilterCategory) {
-        viewModelScope.launch(dispatcherProvider.io + handler) {
+        viewModelScope.launch(dispatcherProvider.io) {
             useCase(filterCategory).onStart {
                 setLoadingStatus(true)
 
