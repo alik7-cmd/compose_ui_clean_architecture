@@ -20,11 +20,19 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().apply {
+
+        return retrofit {
             baseUrl(BuildConfig.SERVER_BASE_URL)
             client(httpClient)
             addConverterFactory(MoshiConverterFactory.create())
-        }.build()
+        }
+    }
+
+
+    private inline fun retrofit(init : Retrofit.Builder.() -> Unit) : Retrofit{
+        val retrofit = Retrofit.Builder()
+        retrofit.init()
+        return retrofit.build()
 
     }
 
