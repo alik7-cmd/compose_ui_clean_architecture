@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,24 +33,31 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.check24.R
 import com.example.check24.common.LoadImageFromUrl
+import com.example.check24.common.Screen
 import com.example.check24.common.cast
 import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.entity.ProductEntity
 
 
 @Composable
-fun ProductOverview(viewModel: ProductOverviewViewModel = hiltViewModel()) {
+fun ProductOverview(
+    navHostController: NavHostController,
+    viewModel: ProductOverviewViewModel = hiltViewModel()
+) {
     LaunchedEffect(key1 = viewModel, block = {
         viewModel.getProduceOverview(FilterCategory.ALL)
     })
     val uiState by viewModel.uiState.collectAsState()
     when (uiState) {
         is ProductOverviewUiState.Error -> {
-            EmptyView(modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight())
+            EmptyView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            )
         }
 
         is ProductOverviewUiState.Init -> {}
@@ -80,7 +88,13 @@ fun ProductOverview(viewModel: ProductOverviewViewModel = hiltViewModel()) {
                         .fillMaxWidth()
                         .wrapContentHeight(), content = {
                         items(uiState.cast<ProductOverviewUiState.Success>().list) {
-                            ProductCard(entity = it, onClick = {})
+                            ProductCard(entity = it, onClick = {
+                                navHostController.currentBackStackEntry?.savedStateHandle?.set(
+                                    "data",
+                                    it
+                                )
+                                navHostController.navigate(Screen.Details.route)
+                            })
                         }
                         item {
                             Text(
@@ -95,9 +109,11 @@ fun ProductOverview(viewModel: ProductOverviewViewModel = hiltViewModel()) {
                         }
                     })
                 } else {
-                    EmptyView(modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight())
+                    EmptyView(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                    )
                 }
 
             }
@@ -106,10 +122,12 @@ fun ProductOverview(viewModel: ProductOverviewViewModel = hiltViewModel()) {
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductCard(entity: ProductEntity, onClick: () -> Unit) {
 
     Card(
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
