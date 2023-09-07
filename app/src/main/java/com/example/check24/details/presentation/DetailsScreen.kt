@@ -12,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -62,6 +63,8 @@ fun DetailsScreen(
 
     Column(
         modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
 
@@ -87,7 +90,7 @@ fun DetailsScreen(
                 .clip(RoundedCornerShape(16.dp))
             LoadImageFromUrl(url = entity?.imageURL ?: "", modifier = modifier)
             Spacer(modifier = Modifier.width(10.dp))
-            Column {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Row {
                     Text(
                         text = entity?.name ?: "",
@@ -148,7 +151,9 @@ fun DetailsScreen(
 
         Text(
             text = "Long Description",
-            modifier = Modifier.padding(12.dp, 0.dp, 12.dp, 12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp, 0.dp, 12.dp, 12.dp),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
         )
@@ -157,14 +162,20 @@ fun DetailsScreen(
         Text(
             text = entity?.longDescription ?: "",
             modifier = Modifier
-                .animateContentSize(animationSpec = spring(Spring.DampingRatioNoBouncy, Spring.StiffnessLow))
+                .fillMaxWidth()
+                .animateContentSize(
+                    animationSpec = spring(
+                        Spring.DampingRatioNoBouncy,
+                        Spring.StiffnessLow
+                    )
+                )
                 .padding(12.dp, 0.dp, 12.dp, 12.dp)
                 .clickable {
-               isExpanded = !isExpanded
-            },
+                    isExpanded = !isExpanded
+                },
             fontSize = 15.sp,
             fontWeight = FontWeight.Normal,
-            maxLines = if(!isExpanded) 3 else 30
+            maxLines = if (!isExpanded) 3 else 30
         )
 
     }
