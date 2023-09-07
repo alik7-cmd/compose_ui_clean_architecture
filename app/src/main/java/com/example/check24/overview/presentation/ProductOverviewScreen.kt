@@ -131,7 +131,7 @@ fun ProductCard(entity: ProductEntity, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(4.dp), shape = CardDefaults.shape
+            .padding(2.dp), shape = CardDefaults.shape
     ) {
         Row(modifier = Modifier.padding(4.dp)) {
             val mod = Modifier
@@ -165,12 +165,13 @@ fun ProductCard(entity: ProductEntity, onClick: () -> Unit) {
                     text = entity.description, modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Normal,
+                    maxLines = 3,
                 )
 
             }
             if (!entity.available) {
                 Spacer(modifier = Modifier.width(16.dp))
-                LoadImageFromUrl(url = entity.imageURL, contentDescription = "", modifier = mod)
+                LoadImageFromUrl(url = entity.imageURL, contentDescription = entity.name, modifier = mod)
             }
         }
 

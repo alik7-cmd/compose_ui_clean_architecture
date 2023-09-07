@@ -1,5 +1,10 @@
 package com.example.check24.details.presentation
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +27,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -58,8 +66,19 @@ fun DetailsScreen(
                 .wrapContentHeight()
                 .padding(10.dp)
         ) {
+            val infiniteTransition = rememberInfiniteTransition()
+            val rotationAnimation = infiniteTransition.animateFloat(
+                initialValue = 0f,
+                targetValue = 360f,
+                animationSpec = infiniteRepeatable(tween(100, easing = LinearEasing))
+            )
             val modifier = Modifier
                 .size(100.dp, 100.dp)
+                .drawBehind {
+                    rotate(rotationAnimation.value) {
+                        drawCircle(Color.DarkGray, style = Stroke(1.0f))
+                    }
+                }
                 .clip(RoundedCornerShape(16.dp))
             LoadImageFromUrl(url = entity?.imageURL ?: "", modifier = modifier)
             Spacer(modifier = Modifier.width(10.dp))
