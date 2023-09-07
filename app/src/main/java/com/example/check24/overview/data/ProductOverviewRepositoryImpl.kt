@@ -1,7 +1,6 @@
 package com.example.check24.overview.data
 
 import com.example.check24.common.BaseResult
-import com.example.check24.common.ui.AppConstant
 import com.example.check24.overview.data.dao.ProductOverviewDao
 import com.example.check24.overview.domain.FilterCategory
 import com.example.check24.overview.domain.ProductOverviewRepository
@@ -14,41 +13,31 @@ class ProductOverviewRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val dao: ProductOverviewDao
 ) : ProductOverviewRepository {
-    private var ERROR_THRESHOLD = AppConstant.ERROR_THRESHOLD
 
-    override fun getProductOverview(filterCategory: FilterCategory, isRefreshing : Boolean): Flow<BaseResult<List<ProductEntity>, String>> {
+    override fun getProductOverview(
+        filterCategory: FilterCategory,
+        isRefreshing: Boolean
+    ): Flow<BaseResult<List<ProductEntity>, String>> {
         return flow {
-
-            if(isRefreshing){
+            emit(BaseResult.Loading)
+            if (isRefreshing) {
                 deleteAllData()
             }
 
-            if (ERROR_THRESHOLD == 0) {
-                emit(BaseResult.Error(""))
-                ERROR_THRESHOLD = AppConstant.ERROR_THRESHOLD
-
-            } else {
-                val productByFilter = when (filterCategory) {
-                    FilterCategory.ALL -> dao.getAllProduct()
-                    FilterCategory.AVAILABLE -> dao.getAllAvailableProduct()
-                    FilterCategory.FAVOURITE -> dao.getAllFavouriteProduct()
-                }
-                if (productByFilter.isNotEmpty()) {
-                    //productByFilter.add(ProductEntity(true))
-                }
-                ERROR_THRESHOLD--
-                emit(BaseResult.Success(productByFilter))
-                if (filterCategory == FilterCategory.ALL && productByFilter.isEmpty()) {
-                    val remoteProduct = remoteDataSource.getProductOverview(filterCategory)
-                    if (remoteProduct is BaseResult.Success) {
-                        saveInLocal(remoteProduct.data)
-                        //remoteProduct.data.add(ProductEntity(true))
-                        emit(remoteProduct)
-                    }
-                }
+            val productByFilter = when (filterCategory) {
+                FilterCategory.ALL -> dao.getAllProduct()
+                FilterCategory.AVAILABLE -> dao.getAllAvailableProduct()
+                FilterCategory.FAVOURITE -> dao.getAllFavouriteProduct()
             }
-
-
+            if (shouldFetchFromServer(filterCategory, productByFilter)) {
+                val remoteProduct = remoteDataSource.getProductOverview(filterCategory)
+                if (remoteProduct is BaseResult.Success) {
+                    saveInLocal(remoteProduct.data)
+                    emit(remoteProduct)
+                }
+            } else {
+                emit(BaseResult.Success(productByFilter))
+            }
         }
     }
 
@@ -57,8 +46,15 @@ class ProductOverviewRepositoryImpl @Inject constructor(
         dao.insertAll(repos)
     }
 
-    private suspend fun deleteAllData(){
+    private suspend fun deleteAllData() {
         dao.nukeTable()
+    }
+
+    private fun shouldFetchFromServer(
+        filterCategory: FilterCategory,
+        productList: List<ProductEntity>
+    ): Boolean {
+        return filterCategory == FilterCategory.ALL && productList.isEmpty()
     }
 }
 

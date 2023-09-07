@@ -98,7 +98,7 @@ class ProductOverviewFragment : Fragment(), OnClickListener, SwipeRefreshLayout.
                 binding.refreshContainer.visibility = View.VISIBLE
             }
             is ProductOverviewUiState.Init -> Unit
-            is ProductOverviewUiState.Loading -> updateUiLoading(state.isLoading)
+            is ProductOverviewUiState.Loading -> updateUiLoading(true)
         }
 
     }

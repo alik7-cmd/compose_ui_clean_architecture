@@ -1,10 +1,14 @@
 package com.example.check24.details.presentation
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -53,6 +57,7 @@ fun DetailsScreen(
         navHostController.previousBackStackEntry?.savedStateHandle?.get<ProductEntity>("data")
 
     var isFav by remember { mutableStateOf(entity?.isLiked) }
+    var isExpanded by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
     Column(
@@ -148,11 +153,18 @@ fun DetailsScreen(
             fontWeight = FontWeight.Bold,
         )
         Spacer(modifier = Modifier.height(10.dp))
+        val text = entity?.longDescription ?: ""
         Text(
             text = entity?.longDescription ?: "",
-            modifier = Modifier.padding(12.dp, 0.dp, 12.dp, 12.dp),
+            modifier = Modifier
+                .animateContentSize(animationSpec = spring(Spring.DampingRatioNoBouncy, Spring.StiffnessLow))
+                .padding(12.dp, 0.dp, 12.dp, 12.dp)
+                .clickable {
+               isExpanded = !isExpanded
+            },
             fontSize = 15.sp,
             fontWeight = FontWeight.Normal,
+            maxLines = if(!isExpanded) 3 else 30
         )
 
     }

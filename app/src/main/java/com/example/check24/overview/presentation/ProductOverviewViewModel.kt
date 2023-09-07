@@ -28,15 +28,14 @@ class ProductOverviewViewModel @Inject constructor(
     fun getProduceOverview(filterCategory: FilterCategory, isRefreshing : Boolean = false) {
         viewModelScope.launch(dispatcherProvider.io) {
             useCase(filterCategory, isRefreshing).onStart {
-                //setLoadingStatus(true)
+                setLoadingStatus()
 
             }.catch {
-                //setLoadingStatus(false)
                 _mutableUiState.value = ProductOverviewUiState.Error(it.message ?: "")
 
             }.collect {
-                //setLoadingStatus(false)
                 when (it) {
+                    is BaseResult.Loading -> setLoadingStatus()
                     is BaseResult.Success -> _mutableUiState.value =
                         ProductOverviewUiState.Success(it.data)
                     is BaseResult.Error -> _mutableUiState.value =
@@ -47,15 +46,15 @@ class ProductOverviewViewModel @Inject constructor(
 
     }
 
-    private fun setLoadingStatus(isLoading: Boolean) {
-        _mutableUiState.value = ProductOverviewUiState.Loading(isLoading)
+    private fun setLoadingStatus() {
+        _mutableUiState.value = ProductOverviewUiState.Loading
     }
 }
 
 
 sealed class ProductOverviewUiState {
     object Init : ProductOverviewUiState()
-    data class Loading(val isLoading: Boolean) : ProductOverviewUiState()
+    object Loading : ProductOverviewUiState()
     data class Success(val list: List<ProductEntity>) : ProductOverviewUiState()
     data class Error(val error: String) : ProductOverviewUiState()
 }

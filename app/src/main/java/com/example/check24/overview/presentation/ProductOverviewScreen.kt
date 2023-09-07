@@ -1,5 +1,6 @@
 package com.example.check24.overview.presentation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.check24.R
 import com.example.check24.common.LoadImageFromUrl
+import com.example.check24.common.LoadingScreen
 import com.example.check24.common.Screen
 import com.example.check24.common.cast
 import com.example.check24.overview.domain.FilterCategory
@@ -50,76 +53,72 @@ fun ProductOverview(
     LaunchedEffect(key1 = viewModel, block = {
         viewModel.getProduceOverview(FilterCategory.ALL)
     })
-    val uiState by viewModel.uiState.collectAsState()
-    when (uiState) {
-        is ProductOverviewUiState.Error -> {
-            EmptyView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            )
-        }
-
-        is ProductOverviewUiState.Init -> {}
-        is ProductOverviewUiState.Loading -> {}
-        is ProductOverviewUiState.Success -> {
-            Column {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(16.dp)
-                ) {
-                    Button(onClick = { viewModel.getProduceOverview(FilterCategory.ALL) }) {
-                        Text(text = stringResource(id = R.string.text_all))
-                    }
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Button(onClick = { viewModel.getProduceOverview(FilterCategory.AVAILABLE) }) {
-                        Text(text = stringResource(id = R.string.text_available))
-                    }
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Button(onClick = { viewModel.getProduceOverview(FilterCategory.FAVOURITE) }) {
-                        Text(text = stringResource(id = R.string.text_favorites))
-                    }
-
-                }
-                if (uiState.cast<ProductOverviewUiState.Success>().list.isNotEmpty()) {
-                    LazyColumn(modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(), content = {
-                        items(uiState.cast<ProductOverviewUiState.Success>().list) {
-                            ProductCard(entity = it, onClick = {
-                                navHostController.currentBackStackEntry?.savedStateHandle?.set(
-                                    "data",
-                                    it
-                                )
-                                navHostController.navigate(Screen.Details.route)
-                            })
-                        }
-                        item {
-                            Text(
-                                text = "This is Footer text",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(0.dp, 0.dp, 12.dp, 0.dp)
-                                    .align(Alignment.CenterHorizontally),
-                                fontSize = 15.sp,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    })
-                } else {
-                    EmptyView(
+    val state by viewModel.uiState.collectAsState()
+    state.let { uiState ->
+        when (uiState) {
+            is ProductOverviewUiState.Error -> ErrorView(msg = stringResource(id = R.string.text_error)) {
+                viewModel.getProduceOverview(FilterCategory.ALL)
+            }
+            is ProductOverviewUiState.Init -> Unit
+            is ProductOverviewUiState.Loading -> LoadingScreen()
+            is ProductOverviewUiState.Success -> {
+                Column {
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight()
-                    )
-                }
+                            .wrapContentHeight()
+                            .padding(16.dp)
+                    ) {
+                        Button(onClick = { viewModel.getProduceOverview(FilterCategory.ALL) }) {
+                            Text(text = stringResource(id = R.string.text_all))
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Button(onClick = { viewModel.getProduceOverview(FilterCategory.AVAILABLE) }) {
+                            Text(text = stringResource(id = R.string.text_available))
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Button(onClick = { viewModel.getProduceOverview(FilterCategory.FAVOURITE) }) {
+                            Text(text = stringResource(id = R.string.text_favorites))
+                        }
 
+                    }
+                    if (uiState.cast<ProductOverviewUiState.Success>().list.isNotEmpty()) {
+                        LazyColumn(modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(), content = {
+                            items(uiState.cast<ProductOverviewUiState.Success>().list) {
+                                ProductCard(entity = it, onClick = {
+                                    navHostController.currentBackStackEntry?.savedStateHandle?.set(
+                                        "data",
+                                        it
+                                    )
+                                    navHostController.navigate(Screen.Details.route)
+                                })
+                            }
+                            item {
+                                Text(
+                                    text = "This is Footer text",
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(0.dp, 0.dp, 12.dp, 0.dp)
+                                        .align(Alignment.CenterHorizontally),
+                                    fontSize = 15.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        })
+                    } else {
+                        EmptyView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                        )
+                    }
+
+                }
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -171,7 +170,11 @@ fun ProductCard(entity: ProductEntity, onClick: () -> Unit) {
             }
             if (!entity.available) {
                 Spacer(modifier = Modifier.width(16.dp))
-                LoadImageFromUrl(url = entity.imageURL, contentDescription = entity.name, modifier = mod)
+                LoadImageFromUrl(
+                    url = entity.imageURL,
+                    contentDescription = entity.name,
+                    modifier = mod
+                )
             }
         }
 
@@ -194,7 +197,38 @@ fun EmptyView(modifier: Modifier = Modifier) {
         )
     }
 
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ErrorView(msg: String, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+
+        ) {
+        Card(
+            onClick = onClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            Column() {
+
+                Image(
+                    painter = painterResource(id = R.drawable.baseline_error_24),
+                    contentDescription = ""
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = msg, fontSize = 18.sp)
+            }
+        }
+
+
+    }
 }
 
 
