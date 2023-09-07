@@ -34,7 +34,7 @@ class ProductOverviewRepositoryImpl @Inject constructor(
                     FilterCategory.FAVOURITE -> dao.getAllFavouriteProduct()
                 }
                 if (productByFilter.isNotEmpty()) {
-                    productByFilter.add(ProductEntity(true))
+                    //productByFilter.add(ProductEntity(true))
                 }
                 ERROR_THRESHOLD--
                 emit(BaseResult.Success(productByFilter))
@@ -42,7 +42,7 @@ class ProductOverviewRepositoryImpl @Inject constructor(
                     val remoteProduct = remoteDataSource.getProductOverview(filterCategory)
                     if (remoteProduct is BaseResult.Success) {
                         saveInLocal(remoteProduct.data)
-                        remoteProduct.data.add(ProductEntity(true))
+                        //remoteProduct.data.add(ProductEntity(true))
                         emit(remoteProduct)
                     }
                 }

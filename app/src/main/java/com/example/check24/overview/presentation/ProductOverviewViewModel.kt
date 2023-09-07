@@ -28,14 +28,14 @@ class ProductOverviewViewModel @Inject constructor(
     fun getProduceOverview(filterCategory: FilterCategory, isRefreshing : Boolean = false) {
         viewModelScope.launch(dispatcherProvider.io) {
             useCase(filterCategory, isRefreshing).onStart {
-                setLoadingStatus(true)
+                //setLoadingStatus(true)
 
             }.catch {
-                setLoadingStatus(false)
+                //setLoadingStatus(false)
                 _mutableUiState.value = ProductOverviewUiState.Error(it.message ?: "")
 
             }.collect {
-                setLoadingStatus(false)
+                //setLoadingStatus(false)
                 when (it) {
                     is BaseResult.Success -> _mutableUiState.value =
                         ProductOverviewUiState.Success(it.data)

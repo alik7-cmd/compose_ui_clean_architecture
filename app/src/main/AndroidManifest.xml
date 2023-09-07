@@ -14,8 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Check24_2"
         tools:targetApi="31">
+        <!--<activity
+            android:name=".HomeActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_home2"
+            android:theme="@style/Theme.Check24_2" />-->
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity2"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Check24_2.NoActionBar">

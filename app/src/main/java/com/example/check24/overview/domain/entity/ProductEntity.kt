@@ -26,6 +26,6 @@ data class ProductEntity(
     var isLiked : Boolean
 ) : Parcelable{
 
-    constructor(isFooter : Boolean) : this(0, isFooter, false,  "", "", "", "", "",
-        "0.0", 0.0f, "", "", false)
+   /* constructor(isFooter : Boolean) : this(0, isFooter, false,  "", "", "", "", "",
+        "0.0", 0.0f, "", "", false)*/
 }
